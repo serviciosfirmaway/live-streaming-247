@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Core 24/7</title>
+    <style>
+        body { font-family: -apple-system, system-ui, sans-serif; background: #0b0f19; color: #fff; padding: 20px; display: flex; justify-content: center; }
+        .box { width: 100%; max-width: 450px; background: #161b26; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        h2 { text-align: center; color: #3b82f6; margin-bottom: 20px; }
+        label { display: block; margin: 12px 0 6px; font-size: 14px; color: #9ca3af; }
+        input { width: 100%; padding: 12px; background: #0b0f19; border: 1px solid #374151; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; background: #2563eb; color: #fff; border: none; padding: 14px; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 20px; cursor: pointer; }
+        button:active { background: #1d4ed8; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>🔴 Transmisión 24/7 Multiplataforma</h2>
+    <form id="liveForm">
+        <label>1. Enlace directo del Video (MP4)</label>
+        <input type="text" id="vidUrl" placeholder="https://ejemplo.com" required>
+        
+        <label>2. URL del Servidor RTMP (Tango, TikTok, YT)</label>
+        <input type="text" id="rtmpUrl" placeholder="rtmp://..." required>
+        
+        <label>3. Clave de Transmisión (Stream Key)</label>
+        <input type="text" id="streamKey" placeholder="live_..." required>
+        
+        <button type="submit">Encender Directo Infinito</button>
+    </form>
+</div>
+<script>
+    document.getElementById('liveForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const res = await fetch('/iniciar-live', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                video_url: document.getElementById('vidUrl').value,
+                rtmp_url: document.getElementById('rtmpUrl').value,
+                stream_key: document.getElementById('streamKey').value
+            })
+        });
+        const data = await res.json();
+        alert(data.mensaje);
+    });
+</script>
+</body>
+</html>
