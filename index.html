@@ -1,56 +1,43 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Stream 24/7 - Diagnóstico</title>
+    <title>Stream Core 24/7</title>
     <style>
         body { font-family: -apple-system, system-ui, sans-serif; background: #0b0f19; color: #fff; padding: 20px; display: flex; justify-content: center; }
         .box { width: 100%; max-width: 450px; background: #161b26; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         h2 { text-align: center; color: #3b82f6; margin-bottom: 20px; }
-        .seccion { border-bottom: 1px solid #374151; padding-bottom: 15px; margin-bottom: 15px; }
         label { display: block; margin: 12px 0 6px; font-size: 14px; color: #9ca3af; }
         input { width: 100%; padding: 12px; background: #0b0f19; border: 1px solid #374151; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 16px; }
         button { width: 100%; background: #2563eb; color: #fff; border: none; padding: 14px; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        .console { width: 100%; height: 120px; background: #000; color: #0f0; font-family: monospace; font-size: 12px; padding: 10px; box-sizing: border-box; margin-top: 15px; border-radius: 6px; overflow-y: auto; white-space: pre-wrap; border: 1px solid #333; }
+        button:active { background: #1d4ed8; }
     </style>
 </head>
 <body>
 <div class="box">
-    <h2>🔴 Panel Stream 24/7 Pro</h2>
+    <h2>🔴 Transmisión 24/7 Multiplataforma</h2>
     <form id="liveForm">
-        <div class="seccion">
-            <label>Usuario</label>
-            <input type="text" id="user" value="tiktoker" required>
-            <label>Contraseña</label>
-            <input type="password" id="pass" value="livevip" required>
-        </div>
-        <div>
-            <label>1. Enlace del Video (MP4)</label>
-            <input type="text" id="vidUrl" placeholder="https://..." required>
-            <label>2. URL RTMP (Tango)</label>
-            <input type="text" id="rtmpUrl" placeholder="rtmps://..." required>
-            <label>3. Clave de Transmisión (Stream Key)</label>
-            <input type="text" id="streamKey" placeholder="live_..." required>
-        </div>
-        <button type="submit">Validar y Encender Live</button>
+        <label>1. Enlace directo del Video (MP4)</label>
+        <input type="text" id="vidUrl" placeholder="https://ejemplo.com" required>
+        
+        <label>2. URL del Servidor RTMP (Tango, TikTok, YT)</label>
+        <input type="text" id="rtmpUrl" placeholder="rtmp://..." required>
+        
+        <label>3. Clave de Transmisión (Stream Key)</label>
+        <input type="text" id="streamKey" placeholder="live_..." required>
+        
+        <button type="submit">Encender Directo Infinito</button>
     </form>
-
-    <h4 style="margin: 20px 0 5px; color: #9ca3af;">🖥️ Consola de Estado del Servidor:</h4>
-    <div class="console" id="logConsole">Esperando inicio de transmisión...</div>
 </div>
-
 <script>
     document.getElementById('liveForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        document.getElementById('logConsole').innerText = "Iniciando motor en la nube...";
-        
         const res = await fetch('/iniciar-live', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                usuario: document.getElementById('user').value,
-                contrasena: document.getElementById('pass').value,
                 video_url: document.getElementById('vidUrl').value,
                 rtmp_url: document.getElementById('rtmpUrl').value,
                 stream_key: document.getElementById('streamKey').value
@@ -59,17 +46,6 @@
         const data = await res.json();
         alert(data.mensaje);
     });
-
-    # 🔄 REPETIDOR AUTOMÁTICO: Revisa los errores cada 3 segundos en segundo plano
-    setInterval(async () => {
-        try {
-            const res = await fetch('/ver-errores');
-            const data = await res.json();
-            if (data.logs) {
-                document.getElementById('logConsole').innerText = data.logs;
-            }
-        } catch (e) {}
-    }, 3000);
 </script>
 </body>
 </html>
