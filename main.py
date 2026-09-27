@@ -41,7 +41,7 @@ def iniciar_live():
     comando = (
         f"ffmpeg -stream_loop -1 -re -i {video} "
         f"-c:v libx264 -preset ultrafast -b:v 2000k "
-        f"-c:a aac -b:a 128k -f flv {destino}"
+        f"-c:a aac -b:a 128k -f flv -tls_verify 0 -flvflags no_duration_filesize {destino}"
     )
     
     try:
